@@ -1,0 +1,1163 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0b766e">
+<title>بطاقة تنفيذ برنامج نشاط طلابي</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script id="org-config" type="application/json">{"leaderName":"عبدالرحمن الدويش","school":"","region":"","logo":"","termStart":"","year":"1448"}</script>
+<style>
+:root{
+  --bg:#f2f5f4; --card:#fff; --ink:#0f2a28; --ink-2:#435a56; --muted:#7a8b88;
+  --line:#e1e8e6; --line-2:#cdd8d5;
+  --pri:#0b766e; --pri-2:#085e58; --pri-soft:#e5f3f1; --acc:#17a673;
+  --err:#c0392b; --err-soft:#fdeceA; --ok:#15803d;
+  --r:16px; --sh:0 1px 2px rgba(15,42,40,.05),0 8px 28px -14px rgba(15,42,40,.22);
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{font-family:"IBM Plex Sans Arabic",Tahoma,"Segoe UI",system-ui,sans-serif;background:var(--bg);color:var(--ink);font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased}
+button{font:inherit;cursor:pointer;color:inherit}
+input,select,textarea{font:inherit;color:inherit}
+[hidden]{display:none!important}
+svg{flex:none}
+
+/* ===== Top bar ===== */
+.topbar{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.9);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.topbar-in{max-width:1440px;margin:auto;display:flex;align-items:center;gap:10px;padding:10px 16px}
+.brand{display:flex;align-items:center;gap:11px;min-width:0}
+.brand-mark{width:40px;height:40px;border-radius:12px;background:linear-gradient(140deg,var(--pri),var(--acc));display:grid;place-items:center;color:#fff;box-shadow:0 6px 16px -8px var(--pri)}
+.brand h1{font-size:15.5px;margin:0;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.brand p{margin:0;font-size:12px;color:var(--muted)}
+.spacer{flex:1}
+.tb-btn{display:inline-flex;align-items:center;gap:7px;height:40px;padding:0 13px;border-radius:11px;border:1px solid var(--line);background:#fff;font-weight:600;font-size:13.5px}
+.tb-btn:hover{border-color:var(--line-2);background:#fafcfb}
+.badge{min-width:20px;height:20px;border-radius:999px;background:var(--pri);color:#fff;font-size:11.5px;display:grid;place-items:center;padding:0 6px}
+.user-chip{display:flex;align-items:center;gap:9px;height:40px;border:1px solid var(--line);background:#fff;border-radius:999px;padding-inline:4px 14px;max-width:260px}
+.user-chip:hover{border-color:var(--line-2)}
+.avatar{width:32px;height:32px;border-radius:50%;background:var(--pri-soft);color:var(--pri);font-weight:700;display:grid;place-items:center;flex:none}
+.user-chip .u-txt{min-width:0;text-align:start;line-height:1.25}
+.user-chip b{display:block;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.user-chip small{display:block;font-size:11px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* ===== Layout ===== */
+.layout{max-width:1440px;margin:auto;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.08fr);gap:20px;padding:20px 16px 112px}
+.form-pane{display:flex;flex-direction:column;gap:16px;min-width:0}
+.preview-pane{position:sticky;top:78px;align-self:start;height:calc(100vh - 190px);min-height:520px;display:flex;flex-direction:column;background:#e4eae8;border-radius:var(--r);border:1px solid var(--line);overflow:hidden}
+.preview-head{display:flex;align-items:center;gap:10px;padding:10px 14px;font-size:13px;color:var(--ink-2);background:#fff;border-bottom:1px solid var(--line)}
+.preview-head b{color:var(--ink)}
+.save-state{font-size:12px;color:var(--muted);display:flex;align-items:center;gap:6px}
+.save-state i{width:7px;height:7px;border-radius:50%;background:var(--acc);display:inline-block}
+.preview-scroll{flex:1;overflow:auto;padding:20px}
+.sheet-wrap{position:relative;margin:0 auto}
+.sheet-wrap .sheet{position:absolute;top:0;left:0;transform-origin:0 0;box-shadow:0 1px 3px rgba(0,0,0,.08),0 18px 40px -18px rgba(0,0,0,.35);border-radius:2px}
+
+/* ===== Cards & fields ===== */
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--sh);padding:18px 18px 20px}
+.card-h{display:flex;align-items:flex-start;gap:11px;margin-bottom:16px}
+.step{width:28px;height:28px;border-radius:9px;background:var(--pri-soft);color:var(--pri);font-weight:700;font-size:13px;display:grid;place-items:center;flex:none}
+.card-h h2{font-size:15.5px;margin:2px 0 0}
+.card-h p{margin:1px 0 0;font-size:12.5px;color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.grid-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.span2{grid-column:1/-1}
+.field>label,.field>.lbl{display:block;font-size:13px;font-weight:600;color:var(--ink-2);margin-bottom:6px}
+.req{color:var(--err);margin-inline-start:2px}
+.inp{width:100%;height:46px;border:1.5px solid var(--line-2);border-radius:11px;padding:0 13px;background:#fff;transition:border-color .15s,box-shadow .15s}
+textarea.inp{height:auto;min-height:92px;padding:11px 13px;resize:vertical;line-height:1.6}
+.inp:focus,.num:focus-within,.tags:focus-within{outline:none;border-color:var(--pri);box-shadow:0 0 0 4px rgba(11,118,110,.12)}
+.inp::placeholder,.tags input::placeholder{color:#a3b1ae}
+select.inp{appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23435a56' stroke-width='2.5' stroke-linecap='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:left 14px center;padding-left:34px}
+.field.invalid .inp,.field.invalid .num{border-color:var(--err)}
+.err-msg{color:var(--err);font-size:12px;margin-top:5px;display:none}
+.field.invalid .err-msg{display:block}
+.hint{font-size:12px;color:var(--muted);margin-top:6px}
+
+.num{display:flex;align-items:stretch;border:1.5px solid var(--line-2);border-radius:11px;overflow:hidden;height:46px;background:#fff;transition:border-color .15s,box-shadow .15s}
+.num button{width:44px;border:0;background:#f5f8f7;color:var(--ink-2);font-size:19px;font-weight:600;line-height:1}
+.num button:hover{background:var(--pri-soft);color:var(--pri)}
+.num input{flex:1;border:0;text-align:center;min-width:0;font-weight:700;font-size:16px;background:transparent;-moz-appearance:textfield;outline:none}
+.num input::-webkit-inner-spin-button,.num input::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
+
+.date-box{border:1px solid var(--line);border-radius:13px;padding:12px;background:#fafcfb}
+.date-box .db-h{display:flex;align-items:center;gap:8px;font-weight:700;font-size:13.5px;margin-bottom:10px}
+.date-box .db-h i{width:8px;height:8px;border-radius:50%;background:var(--acc)}
+.date-box.end .db-h i{background:#e58e26}
+.date-row{display:grid;grid-template-columns:1.25fr 1fr;gap:10px}
+.derived{margin-top:9px;display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--ink-2);min-height:22px}
+.derived .pill{background:#fff;border:1px solid var(--line);border-radius:8px;padding:2px 9px;font-weight:600}
+.derived .muted{color:var(--muted)}
+
+.choices{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.choice{position:relative;display:block}
+.choice input{position:absolute;opacity:0;pointer-events:none}
+.choice span{display:flex;align-items:center;gap:9px;border:1.5px solid var(--line-2);border-radius:13px;padding:11px 12px;font-weight:600;font-size:13.5px;background:#fff;transition:all .15s;cursor:pointer;height:100%}
+.choice span svg{width:20px;height:20px;color:var(--muted)}
+.choice:hover span{border-color:#b5c6c2}
+.choice input:checked+span{border-color:var(--pri);background:var(--pri-soft);color:var(--pri-2)}
+.choice input:checked+span svg{color:var(--pri)}
+.choice input:focus-visible+span{box-shadow:0 0 0 4px rgba(11,118,110,.15)}
+.choice.none span{color:var(--ink-2);font-weight:500}
+
+.tags{display:flex;flex-wrap:wrap;gap:6px;border:1.5px solid var(--line-2);border-radius:11px;padding:6px;min-height:46px;background:#fff;align-items:center;transition:border-color .15s,box-shadow .15s}
+.tag{display:inline-flex;align-items:center;gap:6px;background:var(--pri-soft);color:var(--pri-2);border-radius:8px;padding:5px 10px;font-size:13px;font-weight:600}
+.tag button{border:0;background:none;padding:0;line-height:1;font-size:16px;color:var(--pri);opacity:.7}
+.tag button:hover{opacity:1}
+.tags input{flex:1;min-width:150px;border:0;outline:0;height:32px;padding:0 6px;background:transparent}
+.count-out{display:flex;align-items:center;gap:10px;margin-top:10px;font-size:13px;color:var(--ink-2)}
+.count-out b{font-size:20px;color:var(--pri);min-width:22px;text-align:center}
+
+/* Hero */
+.hero{background:linear-gradient(135deg,#0b766e 0%,#0e8a6f 55%,#17a673 100%);color:#fff;border:0;position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;inset:auto -60px -80px auto;width:220px;height:220px;border-radius:50%;background:rgba(255,255,255,.07)}
+.hero::before{content:"";position:absolute;inset:-70px auto auto -40px;width:180px;height:180px;border-radius:50%;background:rgba(255,255,255,.06)}
+.hero-top{display:flex;align-items:center;gap:16px;position:relative;z-index:1}
+.eyebrow{display:inline-block;font-size:11.5px;font-weight:600;background:rgba(255,255,255,.16);border-radius:999px;padding:2px 10px;margin-bottom:6px}
+.hero h2{margin:0;font-size:20px}
+.hero p{margin:3px 0 0;font-size:13px;opacity:.88}
+.hero .h-edit{margin-top:10px;display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.25);color:#fff;border-radius:9px;height:32px;padding:0 11px;font-size:12.5px;font-weight:600}
+.hero .h-edit:hover{background:rgba(255,255,255,.22)}
+.ring{position:relative;width:76px;height:76px;flex:none}
+.ring svg{width:100%;height:100%;transform:rotate(-90deg)}
+.ring circle{fill:none;stroke-width:5}
+.ring .ring-bg{stroke:rgba(255,255,255,.2)}
+.ring .ring-fg{stroke:#fff;stroke-linecap:round;stroke-dasharray:113.1;stroke-dashoffset:113.1;transition:stroke-dashoffset .4s ease}
+.ring>span{position:absolute;inset:0;display:grid;place-items:center;font-weight:700;font-size:15px;line-height:1.1;text-align:center}
+.ring span small{display:block;font-size:10px;font-weight:500;opacity:.85}
+
+/* Action bar */
+.actionbar{position:fixed;bottom:0;left:0;right:0;z-index:30;background:rgba(255,255,255,.94);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-top:1px solid var(--line)}
+.actionbar-in{max-width:1440px;margin:auto;display:flex;gap:10px;align-items:center;padding:10px 16px calc(10px + env(safe-area-inset-bottom))}
+.btn{height:46px;border-radius:12px;padding:0 17px;border:1.5px solid var(--line-2);background:#fff;font-weight:600;display:inline-flex;align-items:center;justify-content:center;gap:8px;white-space:nowrap;transition:all .15s}
+.btn:hover{border-color:#b3c3bf;background:#fafcfb}
+.btn-pri{background:var(--pri);border-color:var(--pri);color:#fff;box-shadow:0 8px 18px -10px var(--pri)}
+.btn-pri:hover{background:var(--pri-2);border-color:var(--pri-2)}
+.btn-ghost{border-color:transparent;background:transparent;color:var(--ink-2)}
+.btn-danger{color:var(--err)}
+.btn-sm{height:36px;padding:0 12px;border-radius:10px;font-size:13px}
+.seg{display:none;background:#eef2f1;border-radius:12px;padding:4px;gap:4px}
+.seg button{border:0;background:transparent;height:38px;padding:0 14px;border-radius:9px;font-weight:600;font-size:13.5px;color:var(--ink-2)}
+.seg button.on{background:#fff;color:var(--pri);box-shadow:0 1px 3px rgba(0,0,0,.1)}
+
+/* Dialogs */
+dialog{border:0;border-radius:20px;padding:0;width:min(580px,calc(100vw - 24px));max-height:calc(100dvh - 32px);box-shadow:0 30px 80px -20px rgba(0,0,0,.45);color:var(--ink);background:#fff}
+dialog[open]{display:flex;flex-direction:column;animation:pop .22s ease}
+dialog::backdrop{background:rgba(8,28,26,.5);backdrop-filter:blur(3px)}
+@keyframes pop{from{opacity:0;transform:translateY(10px) scale(.98)}to{opacity:1;transform:none}}
+.dlg-form{display:flex;flex-direction:column;min-height:0;flex:1}
+.dlg-h{padding:22px 22px 8px;display:flex;gap:13px;align-items:flex-start}
+.dlg-h .ic{width:44px;height:44px;border-radius:13px;background:var(--pri-soft);color:var(--pri);display:grid;place-items:center;flex:none}
+.dlg-h h3{margin:0;font-size:18px}
+.dlg-h p{margin:3px 0 0;font-size:13px;color:var(--muted)}
+.dlg-b{padding:12px 22px;overflow:auto;display:flex;flex-direction:column;gap:14px}
+.dlg-f{padding:14px 22px 20px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;border-top:1px solid var(--line)}
+.link-btn{border:0;background:none;color:var(--pri);font-weight:600;font-size:13px;padding:4px 0;display:inline-flex;gap:6px;align-items:center}
+.link-btn:hover{text-decoration:underline}
+.privacy{display:flex;gap:9px;align-items:flex-start;background:#f4f8f7;border-radius:12px;padding:10px 12px;font-size:12.5px;color:var(--ink-2)}
+.privacy svg{color:var(--pri);margin-top:2px}
+
+.sig{border:1.5px dashed var(--line-2);border-radius:13px;background:#fbfcfc;position:relative;height:150px;touch-action:none;overflow:hidden}
+.sig canvas{width:100%;height:100%;display:block;cursor:crosshair}
+.sig-ph{position:absolute;inset:0;display:grid;place-items:center;color:#9fb0ac;font-size:13px;pointer-events:none}
+.sig-tools{display:flex;justify-content:space-between;align-items:center;margin-top:6px}
+
+.logo-up{display:flex;gap:12px;align-items:center}
+.logo-prev{width:120px;height:72px;border:1.5px dashed var(--line-2);border-radius:12px;display:grid;place-items:center;background:#fbfcfc;color:#9fb0ac;font-size:12px;overflow:hidden;flex:none}
+.logo-prev img{max-width:92%;max-height:88%;object-fit:contain}
+
+.arch-tools{display:flex;gap:8px}
+.arch-list{display:flex;flex-direction:column;gap:8px}
+.arch-item{display:flex;gap:12px;align-items:center;border:1px solid var(--line);border-radius:13px;padding:11px 12px;background:#fff}
+.arch-item.cur{border-color:var(--pri);background:#f6fbfa}
+.arch-main{flex:1;min-width:0}
+.arch-main b{display:block;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.arch-main span{display:block;font-size:12px;color:var(--muted)}
+.arch-act{display:flex;gap:4px}
+.arch-act button{width:34px;height:34px;border-radius:9px;border:1px solid var(--line);background:#fff;display:grid;place-items:center;color:var(--ink-2)}
+.arch-act button:hover{border-color:var(--pri);color:var(--pri)}
+.arch-act button.del:hover{border-color:var(--err);color:var(--err)}
+.empty{text-align:center;padding:30px 10px;color:var(--muted);font-size:13.5px}
+.empty svg{color:#b9c8c5;margin-bottom:8px}
+
+.toast{position:fixed;bottom:88px;left:50%;transform:translate(-50%,20px);background:#0f2a28;color:#fff;padding:11px 18px;border-radius:12px;font-size:13.5px;font-weight:600;opacity:0;pointer-events:none;transition:all .25s;z-index:100;display:flex;gap:8px;align-items:center;max-width:calc(100vw - 32px)}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+.toast[data-type=err]{background:var(--err)}
+
+/* ===== Official sheet (A4) ===== */
+.sheet{width:210mm;min-height:297mm;background:#fff;color:#111;padding:11mm 12mm 9mm;font-size:11pt;line-height:1.45;display:flex;flex-direction:column;-webkit-print-color-adjust:exact;print-color-adjust:exact;font-family:"IBM Plex Sans Arabic",Tahoma,sans-serif}
+.lh{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:6mm;padding-bottom:3.5mm;border-bottom:.6mm solid #0b766e;position:relative}
+.lh::after{content:"";position:absolute;bottom:-1.6mm;left:0;right:0;height:.25mm;background:#17a673}
+.lh-r{font-size:9.6pt;font-weight:700;line-height:1.75;color:#0f2a28}
+.lh-r .sch{color:#0b766e}
+.lh-l{justify-self:end;font-size:9.4pt;line-height:1.85;color:#0f2a28}
+.lh-l span{color:#56706b;font-weight:600}
+.logo-slot{width:44mm;height:23mm;display:grid;place-items:center}
+.logo-slot img{max-width:100%;max-height:100%;object-fit:contain}
+.logo-ph{width:100%;height:100%;border:.35mm dashed #b6c5c1;border-radius:3mm;display:grid;place-items:center;color:#8fa19d;font-size:8.5pt;text-align:center;line-height:1.4}
+.r-title{text-align:center;margin:7mm 0 5mm}
+.r-title span{display:inline-block;font-size:16.5pt;font-weight:700;color:#0f2a28;padding:0 6mm 1.6mm;border-bottom:.7mm solid #17a673}
+.r-table{width:100%;border-collapse:collapse;table-layout:fixed}
+.r-table th,.r-table td{border:.3mm solid #3b4b48;padding:2.3mm 2.8mm;vertical-align:middle;font-size:10.6pt;text-align:right}
+.r-table th{background:#d6e7eb;font-weight:700;color:#10302c}
+.r-table tr:nth-child(even) td{background:#eef5f6}
+.r-table td.strong{font-weight:700;font-size:11.5pt}
+.r-table td.lbl{font-size:9.6pt;font-weight:600;color:#2c3f3c;line-height:1.5}
+.r-table .k{color:#4f6662;font-weight:600;margin-inline-end:1.5mm;font-size:9.6pt}
+.r-table td.notes{min-height:16mm;height:16mm;vertical-align:top;line-height:1.6}
+.v-empty{display:inline-block;min-width:26mm;border-bottom:.3mm dotted #93a3a0;height:1em;vertical-align:baseline}
+.v-empty.sm{min-width:14mm}
+.blank-date{color:#555;letter-spacing:.5mm}
+.r-opts{list-style:none;margin:0;padding:0;display:grid;gap:1.1mm;font-size:9.8pt}
+.r-opts li{display:flex;align-items:center;gap:2mm}
+.dot{width:3.3mm;height:3.3mm;border:.3mm solid #222;border-radius:50%;display:inline-block;position:relative;flex:none}
+.dot.on{border-color:#0b766e}
+.dot.on::after{content:"";position:absolute;inset:.55mm;border-radius:50%;background:#0b766e}
+.r-opts li.on{font-weight:700;color:#0b766e}
+.r-sign{display:grid;grid-template-columns:1fr 1fr;gap:14mm;margin-top:7mm;padding:0 2mm}
+.r-sign h4{margin:0 0 2.5mm;font-size:11pt;color:#0f2a28;display:flex;align-items:center;gap:2mm}
+.r-sign h4::before{content:"";width:1.2mm;height:4mm;background:#17a673;border-radius:1mm}
+.r-sign .line{display:flex;gap:2mm;margin:1.6mm 0;align-items:flex-end;min-height:6mm;font-size:10.4pt}
+.r-sign .line b{font-weight:600;min-width:15mm;color:#4f6662}
+.sig-img{height:13mm;max-width:46mm;object-fit:contain;display:block}
+.r-note{margin-top:auto;padding-top:6mm;font-size:9pt;color:#333;display:flex;gap:2mm;line-height:1.6}
+.r-foot{margin-top:3mm;display:flex;align-items:center;gap:3mm}
+.r-foot .bar{flex:1;height:2mm;border-radius:2mm;background:linear-gradient(90deg,#2f6fb3,#17a673 55%,#7fc77a)}
+
+#printRoot{display:none}
+
+/* ===== Responsive ===== */
+@media (max-width:1100px){.grid-3{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:980px){
+  .layout{grid-template-columns:1fr;padding-bottom:104px}
+  .preview-pane{display:none;position:static;height:auto;min-height:0}
+  body[data-tab=preview] .form-pane{display:none}
+  body[data-tab=preview] .preview-pane{display:flex}
+  .preview-scroll{padding:12px}
+  .seg{display:flex}
+  .hide-m{display:none!important}
+}
+@media (max-width:600px){
+  .grid,.grid-3{grid-template-columns:1fr}
+  .date-row{grid-template-columns:1fr 1fr}
+  .brand p,.user-chip .u-txt,.tb-btn .t{display:none}
+  .user-chip{padding-inline:4px}
+  .card{padding:16px}
+  .actionbar-in{gap:8px}
+  .btn{padding:0 13px}
+  .hero h2{font-size:18px}
+}
+
+@media print{
+  @page{size:A4;margin:0}
+  html,body{background:#fff!important}
+  body>*:not(#printRoot){display:none!important}
+  #printRoot{display:block}
+  #printRoot .sheet{box-shadow:none;width:210mm;min-height:296mm;margin:0;border-radius:0}
+  #printRoot .logo-ph{visibility:hidden}
+  .r-table tr{break-inside:avoid}
+}
+</style>
+</head>
+<body data-tab="form">
+
+<header class="topbar">
+  <div class="topbar-in">
+    <div class="brand">
+      <div class="brand-mark" aria-hidden="true">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9 13l2 2 4-4"/></svg>
+      </div>
+      <div style="min-width:0">
+        <h1>بطاقة تنفيذ برنامج نشاط طلابي</h1>
+        <p>النشاط الطلابي · العام الدراسي <span id="tbYear">1448</span>هـ</p>
+      </div>
+    </div>
+    <div class="spacer"></div>
+    <button class="tb-btn" id="btnArchive" type="button" title="سجل بطاقاتي">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+      <span class="t">سجل بطاقاتي</span><span class="badge" id="archCount">0</span>
+    </button>
+    <button class="user-chip" id="btnProfile" type="button" title="بياناتي">
+      <span class="avatar" id="uAvatar">؟</span>
+      <span class="u-txt"><b id="uName">—</b><small id="uSchool">—</small></span>
+    </button>
+  </div>
+</header>
+
+<main class="layout">
+  <section class="form-pane" aria-label="تعبئة البطاقة">
+
+    <div class="card hero">
+      <div class="hero-top">
+        <div style="flex:1;min-width:0">
+          <span class="eyebrow" id="heroEyebrow">بطاقة جديدة</span>
+          <h2 id="heroHello">مرحباً</h2>
+          <p id="heroMeta">—</p>
+          <button class="h-edit" type="button" id="heroEdit">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>
+            تعديل بياناتي
+          </button>
+        </div>
+        <div class="ring" aria-label="نسبة الاكتمال">
+          <svg viewBox="0 0 44 44"><circle class="ring-bg" cx="22" cy="22" r="18"/><circle class="ring-fg" id="ringFg" cx="22" cy="22" r="18"/></svg>
+          <span><span id="ringTxt">0/8<small>مكتمل</small></span></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-h"><span class="step">1</span><div><h2>بيانات البرنامج</h2><p>كما ورد في دليل الخطط الدراسية</p></div></div>
+      <div class="grid">
+        <div class="field span2" data-f="program">
+          <label for="f-program">اسم البرنامج<span class="req">*</span></label>
+          <input class="inp" id="f-program" data-k="program" autocomplete="off" placeholder="مثال: برنامج تعزيز القيم الوطنية">
+        </div>
+        <div class="field" data-f="domain">
+          <label for="f-domain">المجال<span class="req">*</span></label>
+          <input class="inp" id="f-domain" data-k="domain" list="dl-domain" autocomplete="off" placeholder="اختر أو اكتب">
+        </div>
+        <div class="field" data-f="sessions">
+          <label for="f-sessions">عدد حصص البرنامج<span class="req">*</span></label>
+          <div class="num"><button type="button" data-step="1" aria-label="زيادة">+</button><input id="f-sessions" data-k="sessions" type="number" min="0" inputmode="numeric" placeholder="0"><button type="button" data-step="-1" aria-label="إنقاص">−</button></div>
+        </div>
+        <div class="field" data-f="term">
+          <label for="f-term">الفصل الدراسي<span class="req">*</span></label>
+          <select class="inp" id="f-term" data-k="term">
+            <option value="">اختر الفصل</option>
+            <option value="الأول">الفصل الدراسي الأول</option>
+            <option value="الثاني">الفصل الدراسي الثاني</option>
+          </select>
+        </div>
+        <div class="field" data-f="grade">
+          <label for="f-grade">الصف<span class="req">*</span></label>
+          <input class="inp" id="f-grade" data-k="grade" list="dl-grade" autocomplete="off" placeholder="مثال: الثاني المتوسط">
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-h"><span class="step">2</span><div><h2>مدة التنفيذ</h2><p>اختر التاريخ، ويُحسب اليوم والتاريخ الهجري (أم القرى) تلقائياً</p></div></div>
+      <div class="grid">
+        <div class="date-box">
+          <div class="db-h"><i></i>بداية التنفيذ<span class="req">*</span></div>
+          <div class="date-row">
+            <div class="field" data-f="startDate"><input class="inp" type="date" data-k="startDate" aria-label="تاريخ البداية"></div>
+            <div class="field"><select class="inp" data-k="startWeek" aria-label="أسبوع البداية"></select></div>
+          </div>
+          <div class="derived" id="dStart"></div>
+        </div>
+        <div class="date-box end">
+          <div class="db-h"><i></i>نهاية التنفيذ<span class="req">*</span></div>
+          <div class="date-row">
+            <div class="field" data-f="endDate"><input class="inp" type="date" data-k="endDate" aria-label="تاريخ النهاية"><div class="err-msg"></div></div>
+            <div class="field"><select class="inp" data-k="endWeek" aria-label="أسبوع النهاية"></select></div>
+          </div>
+          <div class="derived" id="dEnd"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-h"><span class="step">3</span><div><h2>المشاركون</h2></div></div>
+      <div class="grid grid-3">
+        <div class="field" data-f="students">
+          <label for="f-students">عدد الطلبة المشاركين<span class="req">*</span></label>
+          <div class="num"><button type="button" data-step="1" aria-label="زيادة">+</button><input id="f-students" data-k="students" type="number" min="0" inputmode="numeric" placeholder="0"><button type="button" data-step="-1" aria-label="إنقاص">−</button></div>
+        </div>
+        <div class="field" data-f="disabled">
+          <label for="f-disabled">منهم من ذوي الإعاقة</label>
+          <div class="num"><button type="button" data-step="1" aria-label="زيادة">+</button><input id="f-disabled" data-k="disabled" type="number" min="0" inputmode="numeric" placeholder="0"><button type="button" data-step="-1" aria-label="إنقاص">−</button></div>
+          <div class="err-msg"></div>
+        </div>
+        <div class="field" data-f="parents">
+          <label for="f-parents">أولياء الأمور المشاركون</label>
+          <div class="num"><button type="button" data-step="1" aria-label="زيادة">+</button><input id="f-parents" data-k="parents" type="number" min="0" inputmode="numeric" placeholder="0"><button type="button" data-step="-1" aria-label="إنقاص">−</button></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-h"><span class="step">4</span><div><h2>التنفيذ عبر منصة مدرستي</h2><p>عند تنفيذ المشاركة عبر المنصة، ما أيقونة التنفيذ؟</p></div></div>
+      <div class="choices" role="radiogroup">
+        <label class="choice"><input type="radio" name="icon" data-k="icon" value="بنك الإثراءات"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10l9-6 9 6"/><path d="M5 10v8M9.5 10v8M14.5 10v8M19 10v8M3 20h18"/></svg>بنك الإثراءات</span></label>
+        <label class="choice"><input type="radio" name="icon" data-k="icon" value="التطوير الذاتي"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg>التطوير الذاتي</span></label>
+        <label class="choice"><input type="radio" name="icon" data-k="icon" value="قيمنا الغالية"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21.2l8.8-8.8a5.5 5.5 0 0 0 0-7.8z"/></svg>قيمنا الغالية</span></label>
+        <label class="choice"><input type="radio" name="icon" data-k="icon" value="نادي القراءة"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4h6a4 4 0 0 1 4 4v12a3 3 0 0 0-3-3H2z"/><path d="M22 4h-6a4 4 0 0 0-4 4v12a3 3 0 0 1 3-3h7z"/></svg>نادي القراءة</span></label>
+        <label class="choice none"><input type="radio" name="icon" data-k="icon" value=""><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M5.6 5.6l12.8 12.8"/></svg>لم يُنفّذ عبر المنصة</span></label>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-h"><span class="step">5</span><div><h2>الشراكات المجتمعية</h2><p>اكتب اسم الجهة ثم اضغط Enter أو فاصلة — يُحسب العدد تلقائياً</p></div></div>
+      <div class="tags" id="tags"><input id="tagInput" placeholder="مثال: جمعية البر الخيرية" autocomplete="off"></div>
+      <div class="count-out">عدد الشراكات المجتمعية: <b id="partnersCount">0</b></div>
+    </div>
+
+    <div class="card">
+      <div class="card-h"><span class="step">6</span><div><h2>ملاحظات</h2></div></div>
+      <div class="field"><textarea class="inp" data-k="notes" rows="3" placeholder="أي ملاحظات حول التنفيذ (اختياري)"></textarea></div>
+    </div>
+
+  </section>
+
+  <section class="preview-pane" aria-label="معاينة التقرير">
+    <div class="preview-head">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>
+      <span><b>معاينة حية</b> · مقاس A4</span>
+      <span class="spacer"></span>
+      <span class="save-state" id="saveState"><i></i>مسودة محفوظة</span>
+    </div>
+    <div class="preview-scroll" id="previewScroll">
+      <div class="sheet-wrap" id="sheetWrap"><div class="sheet" id="sheet"></div></div>
+    </div>
+  </section>
+</main>
+
+<footer class="actionbar">
+  <div class="actionbar-in">
+    <div class="seg" role="tablist">
+      <button type="button" data-tab="form" class="on">البيانات</button>
+      <button type="button" data-tab="preview">المعاينة</button>
+    </div>
+    <button class="btn btn-ghost hide-m" type="button" id="btnNew">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>بطاقة جديدة
+    </button>
+    <span class="spacer"></span>
+    <button class="btn" type="button" id="btnSave" title="حفظ في السجل (Ctrl+S)">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><path d="M17 21v-8H7v8M7 3v5h8"/></svg><span class="hide-m">حفظ في السجل</span>
+    </button>
+    <button class="btn btn-pri" type="button" id="btnPrint">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><path d="M6 14h12v8H6z"/></svg>طباعة / PDF
+    </button>
+  </div>
+</footer>
+
+<!-- Profile dialog -->
+<dialog id="dlgProfile" aria-labelledby="pTitle">
+  <form class="dlg-form" id="profileForm" novalidate>
+    <div class="dlg-h">
+      <div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+      <div><h3 id="pTitle">أهلاً بك — إعداد لمرة واحدة</h3><p id="pSub">سجّل بياناتك الأساسية، وستظهر تلقائياً في كل بطاقة تصدرها.</p></div>
+    </div>
+    <div class="dlg-b">
+      <div class="field" data-pf="name">
+        <label for="p-name">اسم المعلم<span class="req">*</span></label>
+        <input class="inp" id="p-name" autocomplete="name" placeholder="الاسم كما يظهر في التقرير">
+        <div class="err-msg">الاسم مطلوب</div>
+      </div>
+      <div class="field" data-pf="school">
+        <label for="p-school">اسم المدرسة<span class="req">*</span></label>
+        <input class="inp" id="p-school" autocomplete="organization" placeholder="مثال: متوسطة الملك فهد">
+        <div class="err-msg">اسم المدرسة مطلوب</div>
+      </div>
+      <div class="field" data-pf="region">
+        <label for="p-region">المنطقة / إدارة التعليم<span class="req">*</span></label>
+        <input class="inp" id="p-region" list="dl-region" autocomplete="off" placeholder="مثال: المدينة المنورة">
+        <div class="err-msg">المنطقة مطلوبة</div>
+      </div>
+      <div class="field">
+        <span class="lbl">توقيعك (اختياري)</span>
+        <div class="sig"><canvas id="sigCanvas"></canvas><div class="sig-ph" id="sigPh">وقّع هنا بإصبعك أو بالفأرة</div></div>
+        <div class="sig-tools"><span class="hint" style="margin:0">يُضاف التوقيع إلى خانة المعلم المنفذ</span><button type="button" class="link-btn" id="sigClear">مسح التوقيع</button></div>
+      </div>
+      <div class="privacy">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        <span>تُحفظ بياناتك على هذا الجهاز وهذا المتصفح فقط، ولا تُرسل إلى أي خادم. يمكنك تعديلها في أي وقت من زر اسمك أعلى الصفحة.</span>
+      </div>
+    </div>
+    <div class="dlg-f">
+      <button class="btn btn-pri" type="submit">حفظ والمتابعة</button>
+      <button class="btn" type="button" id="pCancel">إلغاء</button>
+      <span class="spacer"></span>
+      <button type="button" class="link-btn" id="openSchool">إعدادات رائد النشاط
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+    </div>
+  </form>
+</dialog>
+
+<!-- School / leader dialog -->
+<dialog id="dlgSchool" aria-labelledby="sTitle">
+  <form class="dlg-form" id="schoolForm" novalidate>
+    <div class="dlg-h">
+      <div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V8l7-5 7 5v13"/><path d="M9 21v-6h6v6"/></svg></div>
+      <div><h3 id="sTitle">إعدادات رائد النشاط</h3><p>جهّز النسخة مرة واحدة ثم وزّعها على المعلمين جاهزة.</p></div>
+    </div>
+    <div class="dlg-b">
+      <div class="field">
+        <label for="s-leader">اسم رائد النشاط</label>
+        <input class="inp" id="s-leader" placeholder="يظهر في خانة التوقيع">
+      </div>
+      <div class="grid">
+        <div class="field"><label for="s-school">اسم المدرسة (افتراضي)</label><input class="inp" id="s-school" placeholder="يُعبّأ مسبقاً للمعلمين"></div>
+        <div class="field"><label for="s-region">المنطقة (افتراضي)</label><input class="inp" id="s-region" list="dl-region" placeholder="يُعبّأ مسبقاً"></div>
+        <div class="field"><label for="s-year">العام الدراسي (هـ)</label><input class="inp" id="s-year" inputmode="numeric" placeholder="1448"></div>
+        <div class="field"><label for="s-term">بداية الدراسة (أول أحد)</label><input class="inp" id="s-term" type="date"><div class="hint">لحساب رقم الأسبوع تلقائياً</div></div>
+      </div>
+      <div class="field">
+        <span class="lbl">شعار وزارة التعليم</span>
+        <div class="logo-up">
+          <div class="logo-prev" id="logoPrev">لا يوجد شعار</div>
+          <div>
+            <input type="file" id="logoFile" accept="image/*" hidden>
+            <button type="button" class="btn btn-sm" id="logoPick">رفع الشعار الرسمي</button>
+            <button type="button" class="link-btn" id="logoRemove" style="margin-inline-start:8px">إزالة</button>
+            <div class="hint">استخدم ملف الشعار المعتمد من الوزارة (PNG بخلفية شفافة أفضل).</div>
+          </div>
+        </div>
+      </div>
+      <div class="privacy">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5M12 15V3"/></svg>
+        <span><b>نسخة للمعلمين:</b> تُنزّل ملفاً جديداً مدمجاً فيه الشعار واسم الرائد والمدرسة والمنطقة. أرسله للمعلمين عبر واتساب أو البريد، فلا يكتب المعلم إلا اسمه.</span>
+      </div>
+    </div>
+    <div class="dlg-f">
+      <button class="btn btn-pri" type="button" id="sExport">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5M12 15V3"/></svg>تنزيل نسخة للمعلمين</button>
+      <button class="btn" type="submit">حفظ على جهازي</button>
+      <span class="spacer"></span>
+      <button class="btn btn-ghost" type="button" id="sClose">إغلاق</button>
+    </div>
+  </form>
+</dialog>
+
+<!-- Archive dialog -->
+<dialog id="dlgArchive" aria-labelledby="aTitle">
+  <div class="dlg-form">
+    <div class="dlg-h">
+      <div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></div>
+      <div style="flex:1"><h3 id="aTitle">سجل بطاقاتي</h3><p>افتح بطاقة سابقة لتعديلها أو طباعتها، أو كرّرها كنقطة بداية لبرنامج جديد.</p></div>
+    </div>
+    <div class="dlg-b"><div class="arch-list" id="archList"></div></div>
+    <div class="dlg-f">
+      <button class="btn btn-sm" type="button" id="bkExport">تصدير نسخة احتياطية</button>
+      <button class="btn btn-sm" type="button" id="bkImport">استيراد</button>
+      <input type="file" id="bkFile" accept="application/json,.json" hidden>
+      <span class="spacer"></span>
+      <button class="btn btn-ghost" type="button" id="aClose">إغلاق</button>
+    </div>
+  </div>
+</dialog>
+
+<datalist id="dl-domain">
+  <option value="ثقافي"><option value="علمي"><option value="اجتماعي"><option value="رياضي"><option value="فني"><option value="كشفي"><option value="صحي"><option value="وطني"><option value="مهني"><option value="تقني"><option value="بيئي"><option value="ديني">
+</datalist>
+<datalist id="dl-grade">
+  <option value="الأول الابتدائي"><option value="الثاني الابتدائي"><option value="الثالث الابتدائي"><option value="الرابع الابتدائي"><option value="الخامس الابتدائي"><option value="السادس الابتدائي">
+  <option value="الأول المتوسط"><option value="الثاني المتوسط"><option value="الثالث المتوسط">
+  <option value="الأول الثانوي"><option value="الثاني الثانوي"><option value="الثالث الثانوي"><option value="جميع الصفوف">
+</datalist>
+<datalist id="dl-region">
+  <option value="الرياض"><option value="مكة المكرمة"><option value="المدينة المنورة"><option value="القصيم"><option value="المنطقة الشرقية"><option value="عسير"><option value="تبوك"><option value="حائل"><option value="الحدود الشمالية"><option value="جازان"><option value="نجران"><option value="الباحة"><option value="الجوف">
+</datalist>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<div id="printRoot"></div>
+
+<script>
+(() => {
+'use strict';
+/* Snapshot of this file, used to generate a pre-configured copy for teachers */
+const SOURCE = '<!doctype html>\n' + document.documentElement.outerHTML;
+
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const isImg = s => typeof s === 'string' && /^data:image\//.test(s);
+
+const K = { profile:'nashat.profile.v1', school:'nashat.school.v1', draft:'nashat.draft.v1', archive:'nashat.archive.v1' };
+const LS = {
+  get(k, d){ try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch(e){ return d; } },
+  set(k, v){ try { localStorage.setItem(k, JSON.stringify(v)); return true; } catch(e){ toast('تعذّر الحفظ على الجهاز — قد تكون مساحة التخزين ممتلئة أو التصفح خاص', 'err'); return false; } }
+};
+
+/* ---------- State ---------- */
+let BASE = {};
+try { BASE = JSON.parse($('#org-config').textContent); } catch(e){}
+const DEF_CFG = { leaderName:'', school:'', region:'', logo:'', termStart:'', year:'1448' };
+let cfg = Object.assign({}, DEF_CFG, BASE, LS.get(K.school, {}));
+if (!isImg(cfg.logo)) cfg.logo = '';
+let profile = LS.get(K.profile, null);
+let archive = LS.get(K.archive, []);
+if (!Array.isArray(archive)) archive = [];
+
+const REQ = ['program','domain','sessions','term','grade','startDate','endDate','students'];
+const EMPTY = { id:null, createdAt:null, updatedAt:null, program:'', domain:'', sessions:'', term:'', grade:'', startDate:'', startWeek:'', endDate:'', endWeek:'', students:'', disabled:'', parents:'', icon:'', partners:[], notes:'' };
+const fresh = () => JSON.parse(JSON.stringify(EMPTY));
+let data = Object.assign(fresh(), LS.get(K.draft, {}));
+if (!Array.isArray(data.partners)) data.partners = [];
+let dirty = false;
+
+const WEEKS = ['الأول','الثاني','الثالث','الرابع','الخامس','السادس','السابع','الثامن','التاسع','العاشر','الحادي عشر','الثاني عشر','الثالث عشر','الرابع عشر','الخامس عشر','السادس عشر','السابع عشر','الثامن عشر','التاسع عشر','العشرون'];
+const ICONS = ['بنك الإثراءات','التطوير الذاتي','قيمنا الغالية','نادي القراءة'];
+
+/* ---------- Dates (Umm al-Qura) ---------- */
+let hijriFmt = null;
+try { hijriFmt = new Intl.DateTimeFormat('ar-SA-u-ca-islamic-umalqura-nu-latn', {day:'numeric', month:'numeric', year:'numeric'}); } catch(e){}
+const wdFmt = new Intl.DateTimeFormat('ar', {weekday:'long'});
+const toLatin = s => String(s).replace(/[٠-٩]/g, d => '٠١٢٣٤٥٦٧٨٩'.indexOf(d)).replace(/[^\d]/g, '');
+function parseISO(iso){
+  if (!iso) return null;
+  const [y, m, d] = iso.split('-').map(Number);
+  if (!y || !m || !d) return null;
+  return new Date(y, m - 1, d, 12);
+}
+function hijriParts(dt){
+  if (!dt || !hijriFmt) return null;
+  const p = hijriFmt.formatToParts(dt);
+  const g = t => toLatin((p.find(x => x.type === t) || {}).value || '');
+  return { d:g('day'), m:g('month'), y:g('year') };
+}
+function hijri(dt){ const h = hijriParts(dt); return h ? `${h.d} / ${h.m} / ${h.y} هـ` : ''; }
+function weekday(dt){ return dt ? wdFmt.format(dt) : ''; }
+function autoWeek(iso){
+  const a = parseISO(cfg.termStart), b = parseISO(iso);
+  if (!a || !b) return '';
+  a.setDate(a.getDate() - a.getDay()); // align to Sunday
+  const days = Math.round((b - a) / 864e5);
+  if (days < 0) return '';
+  const w = Math.floor(days / 7) + 1;
+  return w >= 1 && w <= WEEKS.length ? String(w) : '';
+}
+function eduDept(r){
+  r = (r || '').trim();
+  if (!r) return 'إدارة التعليم بمنطقة ..................';
+  if (/^(ال)?إدارة/.test(r)) return r;
+  if (r.startsWith('محافظة')) return 'إدارة التعليم ب' + r;
+  if (r.startsWith('المنطقة') || r.startsWith('منطقة')) return 'الإدارة العامة للتعليم ب' + r;
+  return 'الإدارة العامة للتعليم بمنطقة ' + r;
+}
+
+/* ---------- Form binding ---------- */
+function buildWeeks(){
+  $$('select[data-k$="Week"]').forEach(sel => {
+    sel.innerHTML = '<option value="">الأسبوع</option>' + WEEKS.map((w, i) => `<option value="${i + 1}">الأسبوع ${w}</option>`).join('');
+  });
+}
+function fillInputs(){
+  $$('[data-k]').forEach(el => {
+    const k = el.dataset.k;
+    if (el.type === 'radio') el.checked = (data[k] || '') === el.value;
+    else el.value = data[k] ?? '';
+  });
+  renderTags();
+}
+function bindInputs(){
+  $$('[data-k]').forEach(el => {
+    const k = el.dataset.k;
+    const ev = (el.type === 'radio' || el.tagName === 'SELECT' || el.type === 'date') ? 'change' : 'input';
+    el.addEventListener(ev, () => {
+      if (el.type === 'radio') { if (!el.checked) return; data[k] = el.value; }
+      else data[k] = el.value;
+      if (k === 'startDate' || k === 'endDate') {
+        const wk = autoWeek(el.value);
+        if (wk) { const wkKey = k === 'startDate' ? 'startWeek' : 'endWeek'; data[wkKey] = wk; $(`[data-k="${wkKey}"]`).value = wk; }
+      }
+      changed();
+    });
+    if (el.type === 'date') el.addEventListener('input', () => el.dispatchEvent(new Event('change')));
+  });
+  $$('.num button').forEach(b => b.addEventListener('click', () => {
+    const inp = $('input', b.parentElement);
+    const v = Math.max(0, (parseInt(inp.value, 10) || 0) + Number(b.dataset.step));
+    inp.value = v;
+    inp.dispatchEvent(new Event('input'));
+  }));
+}
+
+/* Partners tags */
+function renderTags(){
+  const box = $('#tags'), input = $('#tagInput');
+  $$('.tag', box).forEach(t => t.remove());
+  data.partners.forEach((name, i) => {
+    const t = document.createElement('span');
+    t.className = 'tag';
+    t.innerHTML = `${esc(name)}<button type="button" aria-label="حذف ${esc(name)}" data-i="${i}">×</button>`;
+    box.insertBefore(t, input);
+  });
+  $('#partnersCount').textContent = data.partners.length;
+}
+function addTag(raw){
+  const parts = String(raw).split(/[،,\n]/).map(s => s.trim()).filter(Boolean);
+  let added = false;
+  parts.forEach(p => { if (!data.partners.includes(p)) { data.partners.push(p); added = true; } });
+  if (added) { renderTags(); changed(); }
+}
+function bindTags(){
+  const input = $('#tagInput'), box = $('#tags');
+  input.addEventListener('keydown', e => {
+    if ((e.key === 'Enter' || e.key === ',' || e.key === '،') && !e.isComposing) {
+      e.preventDefault(); addTag(input.value); input.value = '';
+    } else if (e.key === 'Backspace' && !input.value && data.partners.length) {
+      data.partners.pop(); renderTags(); changed();
+    }
+  });
+  input.addEventListener('input', () => { if (/[،,]/.test(input.value)) { addTag(input.value); input.value = ''; } });
+  input.addEventListener('blur', () => { if (input.value.trim()) { addTag(input.value); input.value = ''; } });
+  box.addEventListener('click', e => {
+    const b = e.target.closest('button[data-i]');
+    if (b) { data.partners.splice(Number(b.dataset.i), 1); renderTags(); changed(); input.focus(); }
+    else if (e.target === box) input.focus();
+  });
+}
+
+/* ---------- Validation / progress ---------- */
+function validate(){
+  const errs = {};
+  if (data.startDate && data.endDate && data.endDate < data.startDate) errs.endDate = 'تاريخ النهاية يسبق تاريخ البداية';
+  if (data.disabled !== '' && data.students !== '' && (+data.disabled) > (+data.students)) errs.disabled = 'أكبر من عدد الطلبة المشاركين';
+  $$('.form-pane .field[data-f]').forEach(f => {
+    const e = errs[f.dataset.f];
+    f.classList.toggle('invalid', !!e);
+    const m = $('.err-msg', f); if (m) m.textContent = e || '';
+  });
+  return errs;
+}
+const filled = k => String(data[k] ?? '').trim() !== '';
+function progress(){
+  const n = REQ.filter(filled).length;
+  $('#ringTxt').innerHTML = `${n}/${REQ.length}<small>مكتمل</small>`;
+  $('#ringFg').style.strokeDashoffset = 113.1 * (1 - n / REQ.length);
+}
+function derived(){
+  [['startDate','startWeek','#dStart'], ['endDate','endWeek','#dEnd']].forEach(([dk, wk, sel]) => {
+    const dt = parseISO(data[dk]);
+    $(sel).innerHTML = dt
+      ? `<span class="pill">${esc(weekday(dt))}</span><span class="pill">${esc(hijri(dt))}</span>`
+      : `<span class="muted">اختر التاريخ لإظهار اليوم والتاريخ الهجري</span>`;
+  });
+}
+
+let draftTimer;
+function changed(){
+  dirty = true;
+  validate(); progress(); derived(); renderReport();
+  clearTimeout(draftTimer);
+  draftTimer = setTimeout(saveDraft, 350);
+}
+function saveDraft(){
+  if (LS.set(K.draft, data)) {
+    const t = new Date().toLocaleTimeString('ar-SA-u-nu-latn', {hour:'2-digit', minute:'2-digit'});
+    $('#saveState').innerHTML = `<i></i>مسودة محفوظة · ${t}`;
+  }
+}
+
+/* ---------- Official report ---------- */
+const blank = (cls = '') => `<span class="v-empty ${cls}"></span>`;
+const val = x => (x === '' || x == null) ? blank() : esc(x);
+function dateCells(iso, wk){
+  const dt = parseISO(iso);
+  return `<td><span class="k">اليوم:</span>${dt ? esc(weekday(dt)) : blank('sm')}</td>`
+       + `<td><span class="k">الأسبوع:</span>${wk ? esc(WEEKS[wk - 1]) : blank('sm')}</td>`
+       + `<td><span class="k">التاريخ:</span>${dt ? esc(hijri(dt)) : `<span class="blank-date">&emsp;/&emsp;/ ${esc(cfg.year)}هـ</span>`}</td>`;
+}
+function renderReport(){
+  const p = profile || {};
+  const prepared = hijri(new Date(data.updatedAt || Date.now()));
+  const anyFilled = filled('program');
+  const partnersCount = data.partners.length ? String(data.partners.length) : (anyFilled ? 'لا يوجد' : '');
+  const partnersNames = data.partners.length ? esc(data.partners.join('، ')) : (anyFilled ? '—' : blank());
+  const opts = ICONS.map(t => {
+    const on = data.icon === t;
+    return `<li class="${on ? 'on' : ''}"><span class="dot ${on ? 'on' : ''}"></span>${esc(t)}</li>`;
+  }).join('');
+  const notes = data.notes ? esc(data.notes).replace(/\n/g, '<br>') : '';
+
+  $('#sheet').innerHTML = `
+  <div class="lh">
+    <div class="lh-r">
+      <div>المملكة العربية السعودية</div>
+      <div>وزارة التعليم</div>
+      <div>${esc(eduDept(p.region))}</div>
+      <div class="sch">${p.school ? esc(p.school) : 'المدرسة: ..................'}</div>
+    </div>
+    <div class="logo-slot">${cfg.logo ? `<img src="${cfg.logo}" alt="شعار وزارة التعليم">` : `<div class="logo-ph">موضع الشعار<br>يُضاف من إعدادات الرائد</div>`}</div>
+    <div class="lh-l">
+      <div><span>العام الدراسي:</span> ${esc(cfg.year)}هـ</div>
+      <div><span>الفصل الدراسي:</span> ${data.term ? esc(data.term) : '..........'}</div>
+      <div><span>تاريخ الإعداد:</span> ${esc(prepared)}</div>
+    </div>
+  </div>
+  <div class="r-title"><span>بطاقة تنفيذ برنامج نشاط طلابي</span></div>
+  <table class="r-table">
+    <colgroup><col style="width:29%"><col style="width:20%"><col style="width:25%"><col style="width:26%"></colgroup>
+    <tbody>
+      <tr><th>اسم البرنامج</th><td colspan="3" class="strong">${val(data.program)}</td></tr>
+      <tr><th>المجال</th><td colspan="3">${val(data.domain)}</td></tr>
+      <tr><th>عدد حصص البرنامج</th><td colspan="3">${val(data.sessions)}</td></tr>
+      <tr><th>الفصل الدراسي</th><td colspan="3">${data.term ? 'الفصل الدراسي ' + esc(data.term) : blank()}</td></tr>
+      <tr><th>بداية التنفيذ</th>${dateCells(data.startDate, data.startWeek)}</tr>
+      <tr><th>نهاية التنفيذ</th>${dateCells(data.endDate, data.endWeek)}</tr>
+      <tr><th>الصف</th><td colspan="3">${val(data.grade)}</td></tr>
+      <tr><th>المعلم المنفذ</th><td colspan="3">${val(p.name)}</td></tr>
+      <tr><th>عدد الطلبة المشاركين</th><td colspan="3">${val(data.students)}</td></tr>
+      <tr><th>عدد الطلبة المشاركين من ذوي الإعاقة</th><td colspan="3">${val(data.disabled === '' && anyFilled ? '0' : data.disabled)}</td></tr>
+      <tr><th>عدد أولياء الأمور المشاركين في البرنامج</th><td>${val(data.parents === '' && anyFilled ? '0' : data.parents)}</td><td class="lbl">عند تنفيذ المشاركة عبر منصة مدرستي، ما أيقونة التنفيذ؟</td><td><ul class="r-opts">${opts}</ul></td></tr>
+      <tr><th>عدد الشراكات المجتمعية</th><td>${val(partnersCount)}</td><td class="lbl">أسماء الشراكات المجتمعية:</td><td>${partnersNames}</td></tr>
+      <tr><th>ملاحظات</th><td colspan="3" class="notes">${notes}</td></tr>
+    </tbody>
+  </table>
+  <div class="r-sign">
+    <div>
+      <h4>المعلم المنفذ</h4>
+      <div class="line"><b>الاسم:</b><span>${val(p.name)}</span></div>
+      <div class="line"><b>التاريخ:</b><span>${esc(prepared)}</span></div>
+      <div class="line"><b>التوقيع:</b><span>${isImg(p.signature) ? `<img class="sig-img" src="${p.signature}" alt="توقيع">` : blank()}</span></div>
+    </div>
+    <div>
+      <h4>رائد النشاط</h4>
+      <div class="line"><b>الاسم:</b><span>${val(cfg.leaderName)}</span></div>
+      <div class="line"><b>التاريخ:</b><span>${blank()}</span></div>
+      <div class="line"><b>التوقيع:</b><span>${blank()}</span></div>
+    </div>
+  </div>
+  <div class="r-note"><span>•</span><span>يتم تعبئة هذه البطاقة عند استكمال الحصص المخصصة للبرنامج وفق ما ورد للبرنامج من حصص في دليل الخطط الدراسية / الإصدار السادس.</span></div>
+  <div class="r-foot"><div class="bar"></div></div>`;
+  fitSheet();
+}
+
+function fitSheet(){
+  const pane = $('#previewScroll'), wrap = $('#sheetWrap'), sheet = $('#sheet');
+  const cs = getComputedStyle(pane);
+  const avail = pane.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
+  if (avail <= 0) return;
+  const w = sheet.offsetWidth, h = sheet.offsetHeight;
+  const s = Math.min(1, avail / w);
+  sheet.style.transform = `scale(${s})`;
+  wrap.style.width = (w * s) + 'px';
+  wrap.style.height = (h * s) + 'px';
+}
+
+/* ---------- Header / profile ---------- */
+function renderProfile(){
+  const p = profile || {};
+  const first = (p.name || '').trim().split(/\s+/)[0] || '';
+  $('#uAvatar').textContent = first ? first[0] : '؟';
+  $('#uName').textContent = p.name || 'لم تُسجَّل بعد';
+  $('#uSchool').textContent = p.school || '—';
+  $('#heroHello').textContent = first ? `مرحباً أ. ${first}` : 'مرحباً بك';
+  $('#heroMeta').textContent = [p.school, p.region].filter(Boolean).join(' · ') || '—';
+  $('#heroEyebrow').textContent = data.id ? 'تعديل بطاقة محفوظة' : 'بطاقة جديدة';
+  $('#tbYear').textContent = cfg.year;
+}
+
+/* Signature pad */
+const sig = {
+  c:null, x:null, has:false, down:false, last:null,
+  init(){
+    this.c = $('#sigCanvas'); this.x = this.c.getContext('2d');
+    const c = this.c;
+    c.addEventListener('pointerdown', e => { e.preventDefault(); try{ c.setPointerCapture(e.pointerId); }catch(_){} this.down = true; this.last = this.pos(e); this.dot(this.last); });
+    c.addEventListener('pointermove', e => { if (!this.down) return; e.preventDefault(); const p = this.pos(e); this.line(this.last, p); this.last = p; });
+    ['pointerup','pointercancel'].forEach(ev => c.addEventListener(ev, () => { this.down = false; }));
+  },
+  setup(src){
+    const c = this.c, r = c.getBoundingClientRect(), dpr = Math.max(1, window.devicePixelRatio || 1);
+    c.width = Math.max(1, Math.round(r.width * dpr)); c.height = Math.max(1, Math.round(r.height * dpr));
+    const x = this.x;
+    x.setTransform(dpr, 0, 0, dpr, 0, 0);
+    x.lineCap = 'round'; x.lineJoin = 'round'; x.strokeStyle = '#0d2b6b'; x.fillStyle = '#0d2b6b'; x.lineWidth = 2.4;
+    this.has = false; this.ph();
+    if (isImg(src)) {
+      const img = new Image();
+      img.onload = () => {
+        const s = Math.min((r.width - 20) / img.width, (r.height - 20) / img.height, 1 / dpr * 2);
+        const w = img.width * s, h = img.height * s;
+        x.drawImage(img, (r.width - w) / 2, (r.height - h) / 2, w, h);
+        this.has = true; this.ph();
+      };
+      img.src = src;
+    }
+  },
+  pos(e){ const r = this.c.getBoundingClientRect(); return { x:e.clientX - r.left, y:e.clientY - r.top }; },
+  dot(p){ const x = this.x; x.beginPath(); x.arc(p.x, p.y, 1.2, 0, Math.PI * 2); x.fill(); this.has = true; this.ph(); },
+  line(a, b){ const x = this.x; x.beginPath(); x.moveTo(a.x, a.y); x.lineTo(b.x, b.y); x.stroke(); this.has = true; },
+  clear(){ this.x.save(); this.x.setTransform(1,0,0,1,0,0); this.x.clearRect(0, 0, this.c.width, this.c.height); this.x.restore(); this.has = false; this.ph(); },
+  ph(){ $('#sigPh').hidden = this.has; },
+  value(){
+    if (!this.has) return '';
+    const c = this.c, w = c.width, h = c.height, d = this.x.getImageData(0, 0, w, h).data;
+    let t = h, l = w, r = -1, b = -1;
+    for (let y = 0; y < h; y++) for (let i = 0; i < w; i++) {
+      if (d[(y * w + i) * 4 + 3] > 8) { if (i < l) l = i; if (i > r) r = i; if (y < t) t = y; if (y > b) b = y; }
+    }
+    if (r < 0) return '';
+    const pad = 8; l = Math.max(0, l - pad); t = Math.max(0, t - pad); r = Math.min(w - 1, r + pad); b = Math.min(h - 1, b + pad);
+    const o = document.createElement('canvas'); o.width = r - l + 1; o.height = b - t + 1;
+    o.getContext('2d').drawImage(c, l, t, o.width, o.height, 0, 0, o.width, o.height);
+    return o.toDataURL('image/png');
+  }
+};
+
+function openProfile(){
+  const first = !profile;
+  const p = profile || { name:'', school:cfg.school, region:cfg.region };
+  $('#pTitle').textContent = first ? 'أهلاً بك — إعداد لمرة واحدة' : 'بياناتي';
+  $('#pSub').textContent = first ? 'سجّل بياناتك الأساسية، وستظهر تلقائياً في كل بطاقة تصدرها.' : 'عدّل بياناتك، وستُطبَّق على البطاقات من الآن.';
+  $('#p-name').value = p.name || '';
+  $('#p-school').value = p.school || '';
+  $('#p-region').value = p.region || '';
+  $('#pCancel').hidden = first;
+  $$('[data-pf]').forEach(f => f.classList.remove('invalid'));
+  $('#dlgProfile').showModal();
+  requestAnimationFrame(() => sig.setup(p.signature));
+  if (first) setTimeout(() => $('#p-name').focus(), 60);
+}
+function bindProfile(){
+  const dlg = $('#dlgProfile');
+  dlg.addEventListener('cancel', e => { if (!profile) e.preventDefault(); });
+  $('#pCancel').addEventListener('click', () => dlg.close());
+  $('#sigClear').addEventListener('click', () => sig.clear());
+  $('#profileForm').addEventListener('submit', e => {
+    e.preventDefault();
+    const v = { name:$('#p-name').value.trim(), school:$('#p-school').value.trim(), region:$('#p-region').value.trim() };
+    let ok = true;
+    Object.keys(v).forEach(k => { const bad = !v[k]; $(`[data-pf="${k}"]`).classList.toggle('invalid', bad); if (bad && ok) { ok = false; $(`#p-${k}`).focus(); } });
+    if (!ok) return;
+    const wasFirst = !profile;
+    profile = Object.assign(v, { signature:sig.value(), updatedAt:Date.now() });
+    if (!LS.set(K.profile, profile)) return;
+    dlg.close();
+    renderProfile(); renderReport();
+    toast(wasFirst ? `تم الحفظ — أهلاً أ. ${v.name.split(/\s+/)[0]}` : 'حُدّثت بياناتك');
+  });
+  $('#btnProfile').addEventListener('click', openProfile);
+  $('#heroEdit').addEventListener('click', openProfile);
+  $('#openSchool').addEventListener('click', () => { if (profile) dlg.close(); openSchool(); });
+}
+
+/* ---------- Leader settings ---------- */
+let pendingLogo = null;
+function openSchool(){
+  $('#s-leader').value = cfg.leaderName || '';
+  $('#s-school').value = cfg.school || '';
+  $('#s-region').value = cfg.region || '';
+  $('#s-year').value = cfg.year || '';
+  $('#s-term').value = cfg.termStart || '';
+  pendingLogo = cfg.logo;
+  showLogo();
+  $('#dlgSchool').showModal();
+}
+function showLogo(){
+  $('#logoPrev').innerHTML = pendingLogo ? `<img src="${pendingLogo}" alt="">` : 'لا يوجد شعار';
+  $('#logoRemove').hidden = !pendingLogo;
+}
+function readImage(file, max = 800){
+  return new Promise((res, rej) => {
+    const fr = new FileReader();
+    fr.onload = () => {
+      const img = new Image();
+      img.onload = () => {
+        const s = Math.min(1, max / Math.max(img.width || max, img.height || max));
+        const c = document.createElement('canvas');
+        c.width = Math.max(1, Math.round((img.width || max) * s)); c.height = Math.max(1, Math.round((img.height || max) * s));
+        c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
+        res(c.toDataURL('image/png'));
+      };
+      img.onerror = rej; img.src = fr.result;
+    };
+    fr.onerror = rej; fr.readAsDataURL(file);
+  });
+}
+function collectSchool(){
+  return Object.assign({}, cfg, {
+    leaderName:$('#s-leader').value.trim(),
+    school:$('#s-school').value.trim(),
+    region:$('#s-region').value.trim(),
+    year:toLatin($('#s-year').value) || '1448',
+    termStart:$('#s-term').value,
+    logo:pendingLogo || ''
+  });
+}
+function bindSchool(){
+  const dlg = $('#dlgSchool');
+  $('#sClose').addEventListener('click', () => dlg.close());
+  $('#logoPick').addEventListener('click', () => $('#logoFile').click());
+  $('#logoFile').addEventListener('change', async e => {
+    const f = e.target.files[0]; e.target.value = '';
+    if (!f) return;
+    try { pendingLogo = await readImage(f); showLogo(); } catch(_) { toast('تعذّرت قراءة الصورة', 'err'); }
+  });
+  $('#logoRemove').addEventListener('click', () => { pendingLogo = ''; showLogo(); });
+  $('#schoolForm').addEventListener('submit', e => {
+    e.preventDefault();
+    cfg = collectSchool();
+    if (!LS.set(K.school, cfg)) return;
+    dlg.close(); renderProfile(); renderReport();
+    toast('حُفظت إعدادات المدرسة على هذا الجهاز');
+  });
+  $('#sExport').addEventListener('click', () => {
+    const out = collectSchool();
+    cfg = out; LS.set(K.school, cfg); renderProfile(); renderReport();
+    const json = JSON.stringify(out).replace(/</g, '\\u003c');
+    const re = /(<script id="org-config" type="application\/json">)[\s\S]*?(<\/script>)/;
+    if (!re.test(SOURCE)) { toast('تعذّر إنشاء النسخة', 'err'); return; }
+    const html = SOURCE.replace(re, (m, a, b) => a + json + b);
+    const name = 'بطاقة-تنفيذ-برنامج-نشاط' + (out.school ? '-' + out.school.replace(/[\\/:*?"<>|\s]+/g, '-') : '') + '.html';
+    download(new Blob([html], {type:'text/html;charset=utf-8'}), name);
+    toast('نُزّلت نسخة المعلمين — أرسلها لهم كما هي');
+  });
+}
+function download(blob, name){
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob); a.download = name;
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(a.href), 4000);
+}
+
+/* ---------- Archive ---------- */
+function updateBadge(){ $('#archCount').textContent = archive.length; }
+function rangeTxt(r){
+  const a = parseISO(r.startDate), b = parseISO(r.endDate);
+  if (!a && !b) return 'بدون تاريخ';
+  if (a && b && r.startDate !== r.endDate) return `${hijri(a)} ← ${hijri(b)}`;
+  return hijri(a || b);
+}
+function renderArchive(){
+  const list = $('#archList');
+  if (!archive.length) {
+    list.innerHTML = `<div class="empty"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/></svg><div>لا توجد بطاقات محفوظة بعد.<br>اضغط «حفظ في السجل» بعد تعبئة أي بطاقة.</div></div>`;
+    return;
+  }
+  list.innerHTML = archive.map(r => `
+    <div class="arch-item ${r.id === data.id ? 'cur' : ''}">
+      <div class="arch-main">
+        <b>${esc(r.program || 'بدون اسم')}</b>
+        <span>${esc([r.grade, r.domain, r.students ? r.students + ' طالباً' : ''].filter(Boolean).join(' · ') || '—')}</span>
+        <span>${esc(rangeTxt(r))}</span>
+      </div>
+      <div class="arch-act">
+        <button type="button" data-act="open" data-id="${esc(r.id)}" title="فتح"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg></button>
+        <button type="button" data-act="dup" data-id="${esc(r.id)}" title="تكرار كبطاقة جديدة"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button>
+        <button type="button" class="del" data-act="del" data-id="${esc(r.id)}" title="حذف"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6"/></svg></button>
+      </div>
+    </div>`).join('');
+}
+function loadRecord(rec, asNew){
+  data = Object.assign(fresh(), JSON.parse(JSON.stringify(rec)));
+  if (!Array.isArray(data.partners)) data.partners = [];
+  if (asNew) { data.id = null; data.createdAt = null; data.updatedAt = null; data.startDate = ''; data.endDate = ''; data.startWeek = ''; data.endWeek = ''; }
+  fillInputs(); validate(); progress(); derived(); renderProfile(); renderReport(); saveDraft();
+  dirty = !!asNew;
+}
+function bindArchive(){
+  const dlg = $('#dlgArchive');
+  $('#btnArchive').addEventListener('click', () => { renderArchive(); dlg.showModal(); });
+  $('#aClose').addEventListener('click', () => dlg.close());
+  $('#archList').addEventListener('click', e => {
+    const b = e.target.closest('button[data-act]'); if (!b) return;
+    const rec = archive.find(r => r.id === b.dataset.id); if (!rec) return;
+    if (b.dataset.act === 'del') {
+      if (!confirm(`حذف بطاقة «${rec.program || 'بدون اسم'}» نهائياً؟`)) return;
+      archive = archive.filter(r => r.id !== rec.id); LS.set(K.archive, archive);
+      if (data.id === rec.id) { data.id = null; renderProfile(); }
+      updateBadge(); renderArchive(); toast('حُذفت البطاقة');
+      return;
+    }
+    if (dirty && filled('program') && !confirm('لديك تعديلات غير محفوظة في السجل. المتابعة ستستبدلها، هل تريد المتابعة؟')) return;
+    loadRecord(rec, b.dataset.act === 'dup');
+    dlg.close();
+    toast(b.dataset.act === 'dup' ? 'نُسخت البطاقة — حدّد تواريخ التنفيذ الجديدة' : 'فُتحت البطاقة للتعديل');
+  });
+  $('#bkExport').addEventListener('click', () => {
+    const payload = { type:'nashat-backup', v:1, exportedAt:new Date().toISOString(), profile, archive };
+    download(new Blob([JSON.stringify(payload, null, 1)], {type:'application/json'}), `نسخة-احتياطية-بطاقات-النشاط-${new Date().toISOString().slice(0,10)}.json`);
+  });
+  $('#bkImport').addEventListener('click', () => $('#bkFile').click());
+  $('#bkFile').addEventListener('change', async e => {
+    const f = e.target.files[0]; e.target.value = '';
+    if (!f) return;
+    try {
+      const j = JSON.parse(await f.text());
+      if (j.type !== 'nashat-backup' || !Array.isArray(j.archive)) throw 0;
+      let n = 0;
+      j.archive.forEach(r => { if (r && r.id && !archive.some(a => a.id === r.id)) { archive.push(r); n++; } });
+      archive.sort((a, b) => (b.updatedAt || 0) - (a.updatedAt || 0));
+      LS.set(K.archive, archive);
+      if (j.profile && j.profile.name && (!profile || confirm('تحتوي النسخة على بيانات معلم. هل تريد استبدال بياناتك الحالية بها؟'))) {
+        profile = j.profile; LS.set(K.profile, profile); renderProfile(); renderReport();
+      }
+      updateBadge(); renderArchive(); toast(`استُوردت ${n} بطاقة`);
+    } catch(_) { toast('الملف ليس نسخة احتياطية صالحة', 'err'); }
+  });
+}
+
+/* ---------- Actions ---------- */
+function saveRecord(){
+  if (!filled('program')) { toast('اكتب اسم البرنامج أولاً', 'err'); showTab('form'); $('#f-program').focus(); return; }
+  if (Object.keys(validate()).length) { toast('صحّح الحقول المعلّمة بالأحمر', 'err'); showTab('form'); return; }
+  const now = Date.now();
+  if (!data.id) { data.id = 'r' + now.toString(36) + Math.random().toString(36).slice(2, 6); data.createdAt = now; }
+  data.updatedAt = now;
+  const rec = JSON.parse(JSON.stringify(data));
+  const i = archive.findIndex(r => r.id === rec.id);
+  if (i >= 0) archive.splice(i, 1);
+  archive.unshift(rec);
+  if (!LS.set(K.archive, archive)) return;
+  saveDraft(); dirty = false; updateBadge(); renderProfile(); renderReport();
+  toast(i >= 0 ? 'حُدّثت البطاقة في سجلّك' : 'حُفظت البطاقة في سجلّك');
+}
+function newCard(){
+  if (dirty && filled('program') && !confirm('البطاقة الحالية فيها تعديلات لم تُحفظ في السجل. بدء بطاقة جديدة سيمسحها، هل تريد المتابعة؟')) return;
+  data = fresh(); fillInputs(); validate(); progress(); derived(); renderProfile(); renderReport(); saveDraft(); dirty = false;
+  showTab('form'); window.scrollTo({top:0, behavior:'smooth'});
+  toast('بطاقة جديدة جاهزة');
+}
+function preparePrint(){
+  const clone = $('#sheet').cloneNode(true);
+  clone.removeAttribute('id'); clone.removeAttribute('style');
+  const root = $('#printRoot'); root.innerHTML = ''; root.appendChild(clone);
+}
+function doPrint(){
+  if (!profile) { openProfile(); return; }
+  const missing = REQ.filter(k => !filled(k)).length;
+  if (Object.keys(validate()).length) { toast('صحّح الحقول المعلّمة بالأحمر قبل الطباعة', 'err'); showTab('form'); return; }
+  if (missing && !confirm(`بقي ${missing} من الحقول الأساسية فارغاً. هل تريد الطباعة على أي حال؟`)) return;
+  preparePrint();
+  const t = document.title;
+  document.title = ['بطاقة تنفيذ', data.program, profile.name].filter(Boolean).join(' - ');
+  window.print();
+  setTimeout(() => { document.title = t; }, 800);
+}
+function showTab(tab){
+  document.body.dataset.tab = tab;
+  $$('.seg button').forEach(b => b.classList.toggle('on', b.dataset.tab === tab));
+  if (tab === 'preview') requestAnimationFrame(fitSheet);
+}
+
+let toastTimer;
+function toast(msg, type = 'ok'){
+  const t = $('#toast');
+  t.textContent = msg; t.dataset.type = type; t.classList.add('show');
+  clearTimeout(toastTimer); toastTimer = setTimeout(() => t.classList.remove('show'), 2800);
+}
+
+/* ---------- Init ---------- */
+buildWeeks();
+fillInputs();
+bindInputs();
+bindTags();
+sig.init();
+bindProfile();
+bindSchool();
+bindArchive();
+$('#btnSave').addEventListener('click', saveRecord);
+$('#btnNew').addEventListener('click', newCard);
+$('#btnPrint').addEventListener('click', doPrint);
+$$('.seg button').forEach(b => b.addEventListener('click', () => showTab(b.dataset.tab)));
+window.addEventListener('beforeprint', preparePrint);
+window.addEventListener('keydown', e => {
+  if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 's') { e.preventDefault(); saveRecord(); }
+});
+if ('ResizeObserver' in window) { const ro = new ResizeObserver(() => fitSheet()); ro.observe($('#previewScroll')); ro.observe($('#sheet')); }
+else window.addEventListener('resize', fitSheet);
+if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitSheet);
+
+validate(); progress(); derived(); renderProfile(); renderReport(); updateBadge();
+if (!profile) openProfile();
+})();
+</script>
+</body>
+</html>
